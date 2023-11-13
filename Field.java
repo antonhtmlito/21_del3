@@ -1,6 +1,15 @@
 class Player {
     private String playerName;
     private int playerMoney;
+    private boolean inJail;
+
+    public boolean getInJail() {
+        return inJail;
+    } 
+
+    public void setInJail(boolean inJail) {
+         this.inJail = inJail;
+    } 
 
     public Player(String playerName, int playerMoney) {
         this.playerName = playerName;
@@ -68,6 +77,7 @@ class JailField extends Field implements FieldAction {
     public void doAction(Player player) {
         System.out.println("Action for JailField: " + name);
         System.out.println("Player: " + player);
+        player.setInJail(true);
     }
 }
 
