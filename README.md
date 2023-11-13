@@ -16,7 +16,7 @@ mvn test
 ``` bash
 mvn surefire-report:report 
 ```
-
+see result here: /target/site/surefire-report.html
 ### To build jar file of the code, run 
 ``` bash
 mvn clean package
