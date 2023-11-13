@@ -12,6 +12,11 @@ mvn compile
 ``` bash
 mvn test
 ```
+### To test the code, run 
+``` bash
+mvn surefire-report:report 
+```
+
 ### To build jar file of the code, run 
 ``` bash
 mvn clean package
