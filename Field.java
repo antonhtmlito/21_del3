@@ -258,7 +258,7 @@ class GoToJailField extends Field implements FieldAction {
     }
 }
 
-class GameLogic {
+class DiceRoll {
     private int d1;
     private int p1Pos;
     private int p2Pos;
