@@ -1,4 +1,4 @@
-
+package monopoly;
 
 public class PropertyField extends Field implements FieldAction {
     private int color;

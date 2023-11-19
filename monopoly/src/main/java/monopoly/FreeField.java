@@ -1,4 +1,4 @@
-
+package monopoly;
 
 public class FreeField extends Field implements FieldAction {
     private int reward = 0;

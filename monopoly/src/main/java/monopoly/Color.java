@@ -1,3 +1,4 @@
+package monopoly;
 public class Color {
     public static int BROWN = 0;
     public static int LIGHTBLUE = 1;

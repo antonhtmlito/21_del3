@@ -1,3 +1,4 @@
+package monopoly;
 public class Player {
     private String playerName;
     private int playerMoney;
