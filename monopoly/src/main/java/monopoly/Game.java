@@ -3,10 +3,36 @@ package monopoly;
 import java.util.Random;
 import java.util.Scanner;
 
-class Game {
+public class Game {
     int playerCount = 0;
     int currentPlayer = 1;
     Scanner scanner = new Scanner(System.in);
+    Player[] players;
+
+    public static class Player {
+        int position;
+
+        public int getPosition() {
+            return position;
+        }
+
+        public void setPosition(int position) {
+            this.position = position;
+        }
+
+        public void move(int eyes) {
+            if (position + eyes >= 20) {
+                position = position + eyes - 20;
+            } else {
+                position = position + eyes;
+            }
+        }
+
+        public Player(int position) {
+            this.position = position;
+        }
+
+    }
 
     public void startGame() {
         System.out.println("Velkommen til Monopoly Juinor");
@@ -23,6 +49,10 @@ class Game {
             }
             if (input.equals("2") || input.equals("3") || input.equals("4")) {
                 playerCount = Integer.parseInt(input);
+                players = new Player[playerCount];
+                for (int i = 0; i < playerCount; i++) {
+                    players[i] = new Player(0);
+                }
                 playGame();
                 continue;
             }
@@ -35,34 +65,40 @@ class Game {
     public void displayGame() {
         System.out.println("");
         System.out.println("#####");
-        System.out.print("        |");
+        System.out.print("         |");
         for (int i = 0; i < 20; i++) {
             System.out.print(String.format("%3d |", i));
         }
         System.out.println();
 
-        for (int i = 1; i <= playerCount; i++) {
-            System.out.println("Player " + i );
+        for (int i = 0; i < playerCount; i++) {
+            System.out.print("Player " + (i+1)+" |  ");
+
+            for(int j=0;j<players[i].getPosition();j++){
+               System.out.print("     ");
+            }
+            System.out.println("X");
         }
 
     }
 
     public int rollDice() {
-       return new Random().nextInt(12)+1;
+        return new Random().nextInt(12) + 1;
     }
 
     public void playGame() {
         while (true) {
 
             displayGame();
-            System.out.println("Roll the dice, Player "+currentPlayer);
+            System.out.println("Roll the dice, Player " + currentPlayer);
             scanner.next();
-            int eyes =rollDice();
-            System.out.println("You rolled  "+eyes);
+            int eyes = rollDice();
+            System.out.println("You rolled  " + eyes);
 
-            // next player 
-            if(currentPlayer==playerCount){
-                currentPlayer=1;
+            players[currentPlayer - 1].move(eyes);
+            // next player
+            if (currentPlayer == playerCount) {
+                currentPlayer = 1;
             } else {
                 currentPlayer++;
             }
