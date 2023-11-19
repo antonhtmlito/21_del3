@@ -1,4 +1,4 @@
-package cdio.monopoly;
+package monopoly;
 
 import org.junit.jupiter.api.Test;
 
