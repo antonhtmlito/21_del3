@@ -2,8 +2,7 @@ package monopoly;
 
 public class JailField extends Field implements FieldAction {
     public JailField(String name, int position) {
-        super(name);
-        this.position = position;
+        super(name, position);
     }
 
     public void doAction(Player player) {

@@ -8,7 +8,7 @@ int position;
 
     public void doAction(Player player) {
         System.out.println("Action for ChanceField: " + name);
-        System.out.println("Player: " + player);
+        System.out.println("Player: " + player.getPlayerName());
         player.pickChance();
     }
 
