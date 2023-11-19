@@ -64,6 +64,13 @@ class Player {
 
         int temp = cards[0];
 
+        if (p1Turn = true) {
+            pos = p1Pos;
+        }
+        else {
+            pos = p2Pos;
+        }
+
         if (temp == 0) {
             System.out.println("Ryk frem til Start og modtag M2.")
             pos = 0;
@@ -98,7 +105,8 @@ class Player {
         }
         else if (temp == 5) {
             System.out.println("Det er din fødselsdag! Alle giver dig M1. Tillykke med fødselsdagen!")
-            playerMoney =+ //antal spillere
+            playerMoney =+ playerAmount + 1;
+            //alles money =- 1;
         }
         else if (temp == 6) {
             System.out.println("Du har lavet alle dine lektier. Modtag M2 fra banken.")
@@ -107,7 +115,7 @@ class Player {
         else if (temp == 7) {
             System.out.println("Gratis felt! Ryk frem til Skaterparken for at lave det perfekte grind! hvis ingen ejer den, får du den gratis! Ellers skal du betale leje til ejeren.")
             pos = 10;
-            if (isOwned = false) { //isOwned skal laves {
+            if (isOwned = false) {
                 //få grunden
             }
             else {
@@ -117,6 +125,7 @@ class Player {
         else if (temp == 8) {
             System.out.println("Gratis felt! Ryk frem til et orange felt. Hvis det er ledigt, får du det gratis! Ellers skal du betale leje til ejeren.")
             //ryk til 10 eller 11
+
         }
         else if (temp == 9) {
             System.out.println("Gratis felt! Ryk frem til et orange eller grønt felt. Hvis det er ledigt, får du det gratis! Ellers skal du betale leje til ejeren.")
@@ -165,6 +174,13 @@ class Player {
             System.out.println("Giv dette kort til Hunden, og tag et chancekort mere. Hund: på din næste tur skal du hoppe hen på et til et hvilket som helst ledigt felt og købe det. Hvis der ikke er nogle ledige felter, skal du købe et fra en anden spiller!")
             //igen??
             //ryk til et ledigt felt (isOwned = false)
+        }
+
+        if (p1Turn = true) {
+            p1Pos = pos;
+        }
+        else {
+            p2Pos = pos;
         }
 
         for (int i = 0; i < cards.length - 1; i++) {
@@ -219,13 +235,15 @@ class PropertyField extends Field implements FieldAction {
     private int value = 0;
     private String owner = null;
     private int rent;
+    private boolean isOwned = false;
    
 
-    public PropertyField(String name, int position, String color, int value, int rent) {
+    public PropertyField(String name, int position, String color, int value, int rent, boolean isOwned) {
         super(name, position);
         this.color = color;
         this.value = value;
         this.rent = rent;
+        this.isOwned = isOwned;
     }
 
     public void doAction(Player player) {
@@ -234,6 +252,7 @@ class PropertyField extends Field implements FieldAction {
         if(this.owner == null) {
             player.buyField(this);
             this.owner = player;
+            this.isOwned = true;
         } else if(this.owner == player) {
            // do nothing
         } else {
@@ -355,6 +374,54 @@ class DiceRoll {
 
 class Main {
     public static void main(String[] args) {
+        System.out.println("Indtast venligst antallet af spillere. Vælg mellem 2 og 4.")
+        public int playerAmount;
+        public String playerCar;
+        public String p1;
+        public String p2;
+        public String p3;
+        public String p4;
+        Scanner scan = new Scanner(System.in);
+
+            String command = scan.nextLine();
+            switch(command) {
+                case "2":
+                    playerAmount = 2;
+                    break;
+                case "3":
+                    playerAmount = 3;
+                    break;
+                case "4":
+                    playerAmount = 4;
+                    break;
+                default:
+                    System.out.println("I kan kun være mellem 2 og 4 spillere. Indtast venligst igen.")
+            }
+
+            String command = scan.nextLine();
+            private int[] p = new int[playerAmount]
+            int i = 1;
+            while (int i <= playerAmount)
+            System.out.println("Vælg spillebrik for spiller" + i);
+                switch(command) {
+                    case "Hund":
+                        playerCar = Hund;
+                        break;
+                    case "Kat":
+                        playerCar = Kat;
+                        break;
+                    case "Skib":
+                        playerCar = Skib;
+                        break;
+                    case "Bil":
+                        playerCar = Bil;
+                        break;
+                    default:
+                        System.out.println("I kan kun være mellem 2 og 4 spillere. Indtast venligst igen.")
+                    i++;
+                    p[i] = playerCar;
+                }
+
         Player player1 = new Player("Player1", 1000);
         Player player2 = new Player("Player2", 1500);
 
