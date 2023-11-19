@@ -1,8 +1,10 @@
-package monopoly;
 
-class ChanceField extends Field implements FieldAction {
+
+public class ChanceField extends Field implements FieldAction {
+int position;
     public ChanceField(String name, int position) {
-        super(name, position);
+        super(name);
+        this.position = position;
     }
 
     public void doAction(Player player) {
@@ -10,4 +12,5 @@ class ChanceField extends Field implements FieldAction {
         System.out.println("Player: " + player);
         player.pickChance();
     }
+
 }

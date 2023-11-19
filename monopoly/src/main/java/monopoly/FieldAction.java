@@ -1,5 +1,5 @@
-package monopoly;
 
-interface FieldAction {
+
+public interface FieldAction {
     void doAction(Player player);
 }

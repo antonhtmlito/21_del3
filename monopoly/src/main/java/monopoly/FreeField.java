@@ -1,8 +1,7 @@
-package monopoly;
 
-class FreeField extends Field implements FieldAction {
+
+public class FreeField extends Field implements FieldAction {
     private int reward = 0;
-
     public FreeField(String name, int position) {
         super(name, position);
     }
@@ -14,7 +13,7 @@ class FreeField extends Field implements FieldAction {
 
     public void doAction(Player player) {
         System.out.println("Player: " + player + " landed on free field.");
-        if (this.reward != 0) {
+        if(this.reward != 0) {
             player.getReward(this);
         }
     }
