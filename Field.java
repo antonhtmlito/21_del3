@@ -7,6 +7,7 @@ class Player {
     private boolean inJail;
     private boolean hasFreeJailCard;
     private int currentFieldPosition;
+    public boolean p1Turn;
 
     public void getReward(FreeField field) {
        // TODO : handle this
@@ -53,7 +54,7 @@ class Player {
                 '}';
     }
 
-    private int[] cards = new int[20]
+    private int[] cards = new int[20];
 
     public void pickChance() {
         System.out.println("Player: " + player + " pickup chance.");
@@ -323,7 +324,7 @@ class GoToJailField extends Field implements FieldAction {
 }
 
 class DiceRoll {
-    private int d1;
+    private static int d1;
     private int p1Pos;
     private int p2Pos;
     private static boolean p1Turn;
@@ -348,7 +349,7 @@ class DiceRoll {
         
     }
 
-    public int getd1() {
+    public static int getd1() {
         return d1;
     }
 
@@ -398,10 +399,9 @@ class Main {
                     System.out.println("I kan kun være mellem 2 og 4 spillere. Indtast venligst igen.")
             }
 
-            String command = scan.nextLine();
-            private int[] p = new int[playerAmount]
+            private int[] p = new int[playerAmount];
             int i = 1;
-            while (int i <= playerAmount)
+            while (i <= playerAmount)
             System.out.println("Vælg spillebrik for spiller" + i);
                 switch(command) {
                     case "Hund":
@@ -436,15 +436,15 @@ class Main {
             diceRoll.rollDice();
 
             if (DiceRoll.p1Turn) {
-                p1Pos =+ d1;
+                p1Pos =+ DiceRoll.getd1();
                 p1Turn = false;
             }
             else {
-                p2Pos =+ d1;
+                p2Pos =+ DiceRoll.getd1();
                 p1Turn = true;
             }
         }
-        scan.close
+        scan.close();
       
     }
 }
