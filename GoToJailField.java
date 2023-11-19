@@ -1,8 +1,9 @@
 
 
 public class GoToJailField extends Field implements FieldAction {
-    public GoToJailField(String name) {
+    public GoToJailField(String name, int position) {
         super(name);
+        this.position = position;
     }
 
     public void doAction(Player player) {
