@@ -1,6 +1,6 @@
 package monopoly;
 
-abstract class Field {
+public abstract class Field {
     protected int position;
     protected String name;
 
