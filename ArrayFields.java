@@ -15,8 +15,8 @@ public class ArrayFields {
        new PropertyField("SKATERPARKEN", 10, Color.LIGHTYELLOW, 2000, 2000)
        new PropertyField("SWIMMINGPOOLEN", 11, Color.LIGHTYELLOW, 2000, 2000)
        new FreeField("GRATIS PARKERING",12)
-       new PropertyField("SPILLEHALLEN", 5, Color.RED, 3000, 3000)
-       new PropertyField("BIOGRAFEN", 5, Color.RED, 3000, 3000)
+       new PropertyField("SPILLEHALLEN", 13, Color.RED, 3000, 3000)
+       new PropertyField("BIOGRAFEN", 14, Color.RED, 3000, 3000)
        new ChanceField("CHANCE",15),
        new PropertyField("LEGETØJSBUTIKKEN", 16, Color.YELLOW, 3000, 3000)
        new PropertyField("DYREHANDLEN", 17, Color.YELLOW, 3000, 3000)
