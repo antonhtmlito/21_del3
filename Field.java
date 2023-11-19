@@ -1,3 +1,4 @@
+/*
 class Player {
     private String playerName;
     private int playerMoney;
@@ -75,9 +76,15 @@ class ArrayOfFields {
 interface FieldAction {
     void doAction(Player player);
 }
+
+*/
 abstract class Field {
     protected int position;
     protected String name;
+
+    public Field(String name) {
+        this.name = name;
+    }
 
     public Field(String name, int position) {
         this.name = name;
@@ -93,7 +100,7 @@ abstract class Field {
     }
 }
 
-
+/* 
 class PropertyField extends Field implements FieldAction {
     private String color;
     private int value = 0;
@@ -167,6 +174,7 @@ class FreeField extends Field implements FieldAction {
     }
 }
 
+
 class GoToJailField extends Field implements FieldAction {
     public GoToJailField(String name) {
         super(name);
@@ -183,6 +191,7 @@ class GoToJailField extends Field implements FieldAction {
     }
 }
 
+
 class Main {
     public static void main(String[] args) {
         Player player1 = new Player("Player1", 1000);
@@ -192,3 +201,4 @@ class Main {
       
     }
 }
+*/
