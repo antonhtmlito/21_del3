@@ -12,7 +12,23 @@ public class Player {
     }
 
     public void payRent(Field field) {
-       // TODO : handle this
+        if (field instanceof Field) {
+            Field Field = (Field) field;
+        
+            int rentAmount = Field.getRent();
+        
+            if (playerMoney >= rentAmount) {
+                playerMoney -= rentAmount;
+                Field.getOwner().receiveRent(rentAmount);
+                System.out.println(playerName + " paid rent of " + rentAmount + " to " + Field.getOwner().getPlayerName());
+            } else {
+                System.out.println(playerName + " doesn't have enough money to pay rent.");
+            }
+        } else {
+            System.out.println("Cannot pay rent for this type of field.");
+        }
+        
+        
     }
 
     public void buyField(Field field) {
@@ -58,5 +74,10 @@ public class Player {
     public void pickChance() {
         System.out.println("Player: " + playerName + " pickup chance.");
         // TODO: player pickup chance
+    }
+
+    public void receiveRent(int rentAmount) {
+        this.playerMoney += rentAmount;
+        System.out.println(playerName + " received rent of " + rentAmount);
     }
 }

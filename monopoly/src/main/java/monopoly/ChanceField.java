@@ -11,5 +11,13 @@ int position;
         System.out.println("Player: " + player.getPlayerName());
         player.pickChance();
     }
+    @Override
+    public int getRent() {
+        return 0;
+    }
 
+    @Override
+    public Player getOwner() {
+        return null;
+    }
 }

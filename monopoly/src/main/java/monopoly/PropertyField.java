@@ -26,4 +26,13 @@ public class PropertyField extends Field implements FieldAction {
             player.payRent(this);
         }
     }
+    @Override
+    public int getRent() {
+        return 0;
+    }
+
+    @Override
+    public Player getOwner() {
+        return null;
+    }
 }

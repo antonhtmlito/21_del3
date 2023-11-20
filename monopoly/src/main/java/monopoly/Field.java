@@ -16,4 +16,7 @@ public abstract class Field {
     public int getPosition() {
         return position;
     }
+
+    public abstract int getRent();
+    public abstract Player getOwner();
 }

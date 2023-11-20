@@ -12,4 +12,13 @@ public class JailField extends Field implements FieldAction {
              System.out.println("Player: " + player.getPlayerName() + " visit jail.");
         }
     }
+    @Override
+    public int getRent() {
+        return 0;
+    }
+
+    @Override
+    public Player getOwner() {
+        return null;
+    }
 }
