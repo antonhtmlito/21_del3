@@ -8,7 +8,7 @@ public class Game {
             System.out.println(player1.toString());
             Player player2 = new Player("Spiller2", 1500);
             System.out.println(player2.toString());
-            Field[] allFields = ArrayFields.getFieldArray();
+            Field[] allFields = GameBoard.getFieldArray();
           
             System.out.println("Spillet er sluttet!");
         }
