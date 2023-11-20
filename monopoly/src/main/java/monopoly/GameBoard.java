@@ -1,6 +1,6 @@
 package monopoly;
 
-public class ArrayFields {
+public class GameBoard {
     private static Field[] fields = {
        new FreeField("Start", 0, 2000),
        new PropertyField("BURGERBAREN", 1, Color.BROWN, 1000, 1000),
