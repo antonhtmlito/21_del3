@@ -17,4 +17,17 @@ public class FreeField extends Field implements FieldAction {
             player.getReward(this);
         }
     }
+
+    @Override
+    public int getRent() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getRent'");
+    }
+
+    @Override
+    public Player getOwner() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getOwner'");
+    }
+    
 }

@@ -1,7 +1,7 @@
 package monopoly;
 
 public class GameBoard {
-    private static Field[] fields = {
+    private Field[] fields = {
        new FreeField("Start", 0, 2000),
        new PropertyField("BURGERBAREN", 1, Color.BROWN, 1000, 1000),
        new PropertyField("PIZZARIAET", 2, Color.BROWN, 1000, 1000),
@@ -28,7 +28,7 @@ public class GameBoard {
        new PropertyField("STRANPROMENADEN", 23, Color.BLUE, 5000, 5000)
     };
     
-     public static Field[] getFieldArray() {
+     public Field[] getFieldArray() {
          return fields;
      }
 }
