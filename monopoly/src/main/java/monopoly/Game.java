@@ -10,30 +10,6 @@ public class Game {
     Scanner scanner = new Scanner(System.in);
     Player[] players;
 
-    public static class Player {
-        int position;
-
-        public int getPosition() {
-            return position;
-        }
-
-        public void setPosition(int position) {
-            this.position = position;
-        }
-
-        public void move(int eyes) {
-            if (position + eyes >= 20) {
-                position = position + eyes - 20;
-            } else {
-                position = position + eyes;
-            }
-        }
-
-        public Player(int position) {
-            this.position = position;
-        }
-
-    }
 
     public void startGame() {
         System.out.println("Velkommen til Monopoly Juinor");
@@ -52,7 +28,15 @@ public class Game {
                 playerCount = Integer.parseInt(input);
                 players = new Player[playerCount];
                 for (int i = 0; i < playerCount; i++) {
-                    players[i] = new Player(0);
+                    players[i] = new Player(
+                        "Player "+i,// playerName, 
+                        1000, //playerMoney, 
+                        false, //inJail, 
+                        false,  //hasFreeJailCard, 
+                        0,  // currentFieldPosition,
+                        0 //position
+
+                    );
                 }
                 playGame();
                 continue;

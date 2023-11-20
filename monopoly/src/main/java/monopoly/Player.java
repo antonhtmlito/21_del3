@@ -5,6 +5,35 @@ public class Player {
     private boolean inJail;
     private boolean hasFreeJailCard;
     private int currentFieldPosition;
+    int position;
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    public void move(int eyes) {
+        if (position + eyes >= 20) {
+            position = position + eyes - 20;
+        } else {
+            position = position + eyes;
+        }
+    }
+
+   
+
+    public Player(String playerName, int playerMoney, boolean inJail, boolean hasFreeJailCard, int currentFieldPosition,
+            int position) {
+        this.playerName = playerName;
+        this.playerMoney = playerMoney;
+        this.inJail = inJail;
+        this.hasFreeJailCard = hasFreeJailCard;
+        this.currentFieldPosition = currentFieldPosition;
+        this.position = position;
+    }
 
     public void getReward(FreeField field) {
        // TODO : handle this
