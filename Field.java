@@ -375,7 +375,7 @@ class DiceRoll {
 
 class Main {
     public static void main(String[] args) {
-        System.out.println("Indtast venligst antallet af spillere. Vælg mellem 2 og 4.")
+        System.out.println("Indtast venligst antallet af spillere. Vælg mellem 2 og 4.");
         public int playerAmount;
         public String playerCar;
         public String p1;
@@ -396,7 +396,7 @@ class Main {
                     playerAmount = 4;
                     break;
                 default:
-                    System.out.println("I kan kun være mellem 2 og 4 spillere. Indtast venligst igen.")
+                    System.out.println("I kan kun være mellem 2 og 4 spillere. Indtast venligst igen.");
             }
 
             private int[] p = new int[playerAmount];
@@ -417,7 +417,7 @@ class Main {
                         playerCar = Bil;
                         break;
                     default:
-                        System.out.println("I kan kun være mellem 2 og 4 spillere. Indtast venligst igen.")
+                        System.out.println("I kan kun være mellem 2 og 4 spillere. Indtast venligst igen.");
                     i++;
                     p[i] = playerCar;
                 }
