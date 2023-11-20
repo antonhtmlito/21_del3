@@ -29,12 +29,11 @@ public class Game {
                 players = new Player[playerCount];
                 for (int i = 0; i < playerCount; i++) {
                     players[i] = new Player(
-                        "Player "+i,// playerName, 
-                        1000, //playerMoney, 
-                        false, //inJail, 
-                        false,  //hasFreeJailCard, 
-                        0,  // currentFieldPosition,
-                        0 //position
+                        "Player "+i,  // playerName, 
+                        1000,         //playerMoney, 
+                        false,        //inJail, 
+                        false,        //hasFreeJailCard, 
+                        0             //position
 
                     );
                 }

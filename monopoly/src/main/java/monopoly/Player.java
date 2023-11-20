@@ -4,7 +4,6 @@ public class Player {
     private int playerMoney;
     private boolean inJail;
     private boolean hasFreeJailCard;
-    private int currentFieldPosition;
     int position;
 
     public int getPosition() {
@@ -25,13 +24,11 @@ public class Player {
 
    
 
-    public Player(String playerName, int playerMoney, boolean inJail, boolean hasFreeJailCard, int currentFieldPosition,
-            int position) {
+    public Player(String playerName, int playerMoney, boolean inJail, boolean hasFreeJailCard,int position) {
         this.playerName = playerName;
         this.playerMoney = playerMoney;
         this.inJail = inJail;
         this.hasFreeJailCard = hasFreeJailCard;
-        this.currentFieldPosition = currentFieldPosition;
         this.position = position;
     }
 
