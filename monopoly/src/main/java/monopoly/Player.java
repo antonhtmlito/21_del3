@@ -4,7 +4,8 @@ public class Player {
     private int playerMoney;
     private boolean inJail;
     private boolean hasFreeJailCard;
-    int position;
+    private int position;
+    private String symbol;
 
     public int getPosition() {
         return position;
@@ -14,22 +15,33 @@ public class Player {
         this.position = position;
     }
 
-    public void move(int eyes) {
+    public boolean move(int eyes) {
+        boolean passedStart;
         if (position + eyes >= 20) {
             position = position + eyes - 20;
+            passedStart=true;
         } else {
             position = position + eyes;
+            passedStart=false;
         }
+        System.out.print("moved "+ playerName + " to " + (position+1));
+        if(passedStart){
+            System.out.print(" and passed start");
+            
+        }
+        System.out.println();
+        return passedStart;
     }
-
+   
    
 
-    public Player(String playerName, int playerMoney, boolean inJail, boolean hasFreeJailCard,int position) {
+    public Player(String playerName, int playerMoney, boolean inJail, boolean hasFreeJailCard,int position, String symbol) {
         this.playerName = playerName;
         this.playerMoney = playerMoney;
         this.inJail = inJail;
         this.hasFreeJailCard = hasFreeJailCard;
         this.position = position;
+        this.symbol = symbol;
     }
 
     public void getReward(FreeField field) {
@@ -106,4 +118,46 @@ public class Player {
         this.playerMoney += rentAmount;
         System.out.println(playerName + " modtager leje på " + rentAmount);
     }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    public int getPlayerMoney() {
+        return playerMoney;
+    }
+
+    public void setPlayerMoney(int playerMoney) {
+        this.playerMoney = playerMoney;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((symbol == null) ? 0 : symbol.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Player other = (Player) obj;
+        if (symbol == null) {
+            if (other.symbol != null)
+                return false;
+        } else if (!symbol.equals(other.symbol))
+            return false;
+        return true;
+    }
+    
 }

@@ -2,8 +2,8 @@ package monopoly;
 
 public class ChanceField extends Field implements FieldAction {
 int position;
-    public ChanceField(String name, int position) {
-        super(name, position);
+    public ChanceField(String symbol,String name, int position) {
+        super(symbol,name, position);
     }
 
     public void doAction(Player player) {

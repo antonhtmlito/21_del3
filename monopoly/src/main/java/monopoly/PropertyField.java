@@ -3,12 +3,12 @@ package monopoly;
 public class PropertyField extends Field implements FieldAction {
     private int color;
     private int value = 0;
-    private String owner = null;
+    private Player owner = null;
     private int rent;
    
 
-    public PropertyField(String name, int position, int color, int value, int rent) {
-        super(name, position);
+    public PropertyField(String symbol, String name, int position, int color, int value, int rent) {
+        super(symbol, name, position);
         this.color = color;
         this.value = value;
         this.rent = rent;
@@ -19,9 +19,7 @@ public class PropertyField extends Field implements FieldAction {
         System.out.println("Spiller: " + player.getPlayerName());
         if(this.owner == null) {
             player.buyField(this);
-            this.owner = player.getPlayerName();
-        } else if(this.owner.equalsIgnoreCase(player.getPlayerName())) {
-           // do nothing
+            this.owner = player;
         } else {
             player.payRent(this);
         }
@@ -33,6 +31,11 @@ public class PropertyField extends Field implements FieldAction {
 
     @Override
     public Player getOwner() {
-        return null;
+        return owner;
     }
+
+    public void setOwner(Player owner) {
+        this.owner = owner;
+    }
+    
 }

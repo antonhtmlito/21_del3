@@ -4,12 +4,12 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Game {
-    
-   int playerCount = 0;
+
+    int playerCount = 0;
     int currentPlayer = 1;
     Scanner scanner = new Scanner(System.in);
     Player[] players;
-
+    GameBoard gameBoard = new GameBoard();
 
     public void startGame() {
         System.out.println("Velkommen til Monopoly Juinor");
@@ -29,11 +29,12 @@ public class Game {
                 players = new Player[playerCount];
                 for (int i = 0; i < playerCount; i++) {
                     players[i] = new Player(
-                        "Player "+i,  // playerName, 
-                        1000,         //playerMoney, 
-                        false,        //inJail, 
-                        false,        //hasFreeJailCard, 
-                        0             //position
+                            "Player " + (i + 1),
+                            1000,
+                            false,
+                            false,
+                            0,
+                            getSymbol(i)
 
                     );
                 }
@@ -48,21 +49,65 @@ public class Game {
 
     public void displayGame() {
         System.out.println("");
-        System.out.println("#####");
-        System.out.print("         |");
-        for (int i = 0; i < 20; i++) {
-            System.out.print(String.format("%3d |", i));
+        System.out.println("");
+        // System.out.print(" |");
+        for (int i = 0; i < playerCount; i++) {
+            Player p = players[i];
+            System.out.print(p.getSymbol() + p.getPlayerName() + " $" + p.getPlayerMoney() + "   ");
         }
         System.out.println();
-
-        for (int i = 0; i < playerCount; i++) {
-            System.out.print("Player " + (i+1)+" |  ");
-
-            for(int j=0;j<players[i].getPosition();j++){
-               System.out.print("     ");
+        for (int i = 0; i < 24; i++) {
+            if (i != 0) {
+                System.out.print("|");
             }
-            System.out.println("X");
+            System.out.print(String.format("%3d ", (i + 1)));
+
         }
+        System.out.println();
+        /*
+         * for (int i = 0; i < 24; i++) {
+         * 
+         * if (i != 0) {
+         * System.out.print("|");
+         * }
+         * System.out.print(String.format("%3s ", gameBoard.getField(i).getSymbol()));
+         * 
+         * }
+         * System.out.println();
+         */
+        for (int i = 0; i < playerCount; i++) {
+            Player p = players[i];
+            System.out.print("  ");
+
+            for (int j = 0; j < 24; j++) {
+                Field field = gameBoard.getField(j);
+                if (j != 0) {
+                    System.out.print("    ");
+                }
+                if (p.getPosition() == j) {
+                    System.out.print(p.getSymbol());
+                } else {
+                    if (isOwner(field, p)) {
+                        System.out.print("⌂");
+                    } else {
+                        System.out.print(" ");
+                    }
+                }
+
+            }
+            System.out.println();
+        }
+
+    }
+
+    public boolean isOwner(Field field, Player player) {
+        if (field instanceof PropertyField) {
+            PropertyField propertyField = (PropertyField) field;
+            if (propertyField.getOwner() != null) {
+                return player.equals(propertyField.getOwner());
+            }
+        }
+        return false;
 
     }
 
@@ -78,8 +123,21 @@ public class Game {
             scanner.next();
             int eyes = rollDice();
             System.out.println("You rolled  " + eyes);
+            Player p = players[currentPlayer - 1];
 
-            players[currentPlayer - 1].move(eyes);
+            boolean passedStart = p.move(eyes);
+
+            // check if propertyfield and owned
+            // if not owned buy it
+            Field field = gameBoard.getFields()[p.getPosition()];
+            if (field instanceof PropertyField) {
+                PropertyField propertyField = (PropertyField) field;
+                if (propertyField.getOwner() == null) {
+                    propertyField.setOwner(p);
+                }
+
+            }
+
             // next player
             if (currentPlayer == playerCount) {
                 currentPlayer = 1;
@@ -89,19 +147,38 @@ public class Game {
         }
     }
 
+    public String getSymbol(int symbolNumber) {
+
+        switch (symbolNumber) {
+            case 0:
+                return "🐶";
+            case 1:
+                return "🐱";
+            case 2:
+                return "🚢";
+            case 3:
+                return "🚗";
+            default:
+                return "❌";
+
+        }
+
+    }
+
     public static void main(String[] args) {
         new Game().startGame();
     }
-        /*  public static void main(String[] args) {
-            System.out.println("Spillet starter!");
-            Player player1 = new Player("Spiller1", 1000);
-            System.out.println(player1.toString());
-            Player player2 = new Player("Spiller2", 1500);
-            System.out.println(player2.toString());
-            Field[] allFields = GameBoard.getFieldArray();
-          
-            System.out.println("Spillet er sluttet!");
-        } */
-    
+    /*
+     * public static void main(String[] args) {
+     * System.out.println("Spillet starter!");
+     * Player player1 = new Player("Spiller1", 1000);
+     * System.out.println(player1.toString());
+     * Player player2 = new Player("Spiller2", 1500);
+     * System.out.println(player2.toString());
+     * Field[] allFields = GameBoard.getFieldArray();
+     * 
+     * System.out.println("Spillet er sluttet!");
+     * }
+     */
 
 }
