@@ -7,8 +7,8 @@ int position;
     }
 
     public void doAction(Player player) {
-        System.out.println("Action for ChanceField: " + name);
-        System.out.println("Player: " + player.getPlayerName());
+        System.out.println("Konskevens ved chancefelt " + name);
+        System.out.println("Spiller: " + player.getPlayerName());
         player.pickChance();
     }
     @Override

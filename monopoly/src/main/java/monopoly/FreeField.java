@@ -12,7 +12,7 @@ public class FreeField extends Field implements FieldAction {
     }
 
     public void doAction(Player player) {
-        System.out.println("Player: " + player + " landed on free field.");
+        System.out.println("Spiller: " + player + " landte på et frit felt");
         if(this.reward != 0) {
             player.getReward(this);
         }

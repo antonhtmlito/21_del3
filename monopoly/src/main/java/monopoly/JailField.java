@@ -9,7 +9,7 @@ public class JailField extends Field implements FieldAction {
         if(player.getInJail()) {
             // TODO : handle this
         } else {
-             System.out.println("Player: " + player.getPlayerName() + " visit jail.");
+             System.out.println("Spiller: " + player.getPlayerName() + " besøger fængsel");
         }
     }
     @Override

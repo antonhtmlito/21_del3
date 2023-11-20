@@ -20,12 +20,12 @@ public class Player {
             if (playerMoney >= rentAmount) {
                 playerMoney -= rentAmount;
                 Field.getOwner().receiveRent(rentAmount);
-                System.out.println(playerName + " paid rent of " + rentAmount + " to " + Field.getOwner().getPlayerName());
+                System.out.println(playerName + " har betalt leje på " + rentAmount + " til " + Field.getOwner().getPlayerName());
             } else {
-                System.out.println(playerName + " doesn't have enough money to pay rent.");
+                System.out.println(playerName + " har ikke nok penge til at betale leje.");
             }
         } else {
-            System.out.println("Cannot pay rent for this type of field.");
+            System.out.println("Kan ikke betale leje for dette type felt.");
         }
         
         
@@ -72,12 +72,12 @@ public class Player {
     }
 
     public void pickChance() {
-        System.out.println("Player: " + playerName + " pickup chance.");
+        System.out.println("Spiller: " + playerName + " trækker et chancekort.");
         // TODO: player pickup chance
     }
 
     public void receiveRent(int rentAmount) {
         this.playerMoney += rentAmount;
-        System.out.println(playerName + " received rent of " + rentAmount);
+        System.out.println(playerName + " modtager leje på " + rentAmount);
     }
 }

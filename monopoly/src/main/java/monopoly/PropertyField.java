@@ -15,8 +15,8 @@ public class PropertyField extends Field implements FieldAction {
     }
 
     public void doAction(Player player) {
-        System.out.println("Action for PropertyField: " + name);
-        System.out.println("Player: " + player.getPlayerName());
+        System.out.println("Konsekvens for feltet: " + name);
+        System.out.println("Spiller: " + player.getPlayerName());
         if(this.owner == null) {
             player.buyField(this);
             this.owner = player.getPlayerName();
