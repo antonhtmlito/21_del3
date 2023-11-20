@@ -5,13 +5,15 @@ public class PropertyField extends Field implements FieldAction {
     private int value = 0;
     private String owner = null;
     private int rent;
+    private boolean isOwned = false;
    
 
-    public PropertyField(String name, int position, int color, int value, int rent) {
+    public PropertyField(String name, int position, int color, int value, int rent, boolean isOwned) {
         super(name, position);
         this.color = color;
         this.value = value;
         this.rent = rent;
+        this.isOwned = isOwned;
     }
 
     public void doAction(Player player) {
@@ -20,6 +22,7 @@ public class PropertyField extends Field implements FieldAction {
         if(this.owner == null) {
             player.buyField(this);
             this.owner = player.getPlayerName();
+            this.isOwned = true;
         } else if(this.owner.equalsIgnoreCase(player.getPlayerName())) {
            // do nothing
         } else {
