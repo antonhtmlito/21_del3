@@ -4,7 +4,6 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Game {
-
     int playerCount = 0;
     int currentPlayer = 1;
     Scanner scanner = new Scanner(System.in);
