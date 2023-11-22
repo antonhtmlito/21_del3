@@ -14,7 +14,7 @@ class DiceRoll {
         p1Turn = true;
     }
 
-    public void rollDice() {
+    public static void rollDice() {
         Random ran = new Random();
 
         d1 = ran.nextInt(6) + 1;

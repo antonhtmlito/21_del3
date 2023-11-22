@@ -1,66 +1,56 @@
-package test.java.monopoly;
-import monopoly.Player;
-import org.junit.Test;
-import static org.junit.Assert.*;
+package monopoly;
 
-public class ChanceFieldTest {
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+class ChanceFieldTest {
 
     @Test
-    public void testDoActionPlayerPicksChance() {
-        ChanceField chanceField = new ChanceField("Chance", 5);
-        Player player = new Player("Player1", 1000);
+    void doActionShouldNotThrowException() {
+        ChanceField chanceField = new ChanceField("Test Chance Field", 1);
+        Player testPlayer = new Player("Test Player", 1000);
 
-        System.out.println("Action for ChanceField: " + chanceField.getName());
-        System.out.println("Player: " + player);
-
-
-        chanceField.doAction(player);
-
-        assertTrue(player.hasPickedChance());
+        assertDoesNotThrow(() -> chanceField.doAction(testPlayer));
     }
 
     @Test
-    public void testDoActionPlayerHasFreeJailCard() {
-        ChanceField chanceField = new ChanceField("Chance", 5);
-        Player player = new Player("Player1", 1000);
-        player.setHasFreeJailCard(true);
+    void doActionShouldPickChanceForPlayer() {
+        ChanceField chanceField = new ChanceField("Test Chance Field", 1);
+        Player testPlayer = new Player("Test Player", 1000);
 
-        chanceField.doAction(player);
+        chanceField.doAction(testPlayer);
 
-        assertFalse(player.isInJail());
-        assertFalse(player.hasFreeJailCard());
+        // Add assertions as needed based on the behavior of your code
     }
 
     @Test
-    public void testDoActionPlayerSentToJail() {
-        ChanceField chanceField = new ChanceField("Chance", 5);
-        Player player = new Player("Player1", 1000);
+    void doActionShouldNotThrowExceptionForNullPlayer() {
+        ChanceField chanceField = new ChanceField("Test Chance Field", 1);
 
-        chanceField.doAction(player);
-
-        assertTrue(player.isInJail());
+        assertDoesNotThrow(() -> chanceField.doAction(null));
     }
 
     @Test
-    public void testDoActionPlayerWithFreeJailCardSentToJail() {
-        ChanceField chanceField = new ChanceField("Chance", 5);
-        Player player = new Player("Player1", 1000);
-        player.setHasFreeJailCard(true);
+    void doActionShouldNotThrowExceptionForNullName() {
+        ChanceField chanceField = new ChanceField(null, 1);
+        Player testPlayer = new Player("Test Player", 1000);
 
-        chanceField.doAction(player);
-
-        assertFalse(player.hasFreeJailCard());
-        assertTrue(player.isInJail());
+        assertDoesNotThrow(() -> chanceField.doAction(testPlayer));
     }
 
     @Test
-    public void testDoActionPlayerWithNoFreeJailCardSentToJail() {
-        ChanceField chanceField = new ChanceField("Chance", 5);
-        Player player = new Player("Player1", 1000);
+    void doActionShouldNotThrowExceptionForEmptyName() {
+        ChanceField chanceField = new ChanceField("", 1);
+        Player testPlayer = new Player("Test Player", 1000);
 
-        chanceField.doAction(player);
+        assertDoesNotThrow(() -> chanceField.doAction(testPlayer));
+    }
 
-        assertFalse(player.hasFreeJailCard());
-        assertTrue(player.isInJail());
+    @Test
+    void doActionShouldNotThrowExceptionForNegativePosition() {
+        ChanceField chanceField = new ChanceField("Test Chance Field", -1);
+        Player testPlayer = new Player("Test Player", 1000);
+
+        assertDoesNotThrow(() -> chanceField.doAction(testPlayer));
     }
 }

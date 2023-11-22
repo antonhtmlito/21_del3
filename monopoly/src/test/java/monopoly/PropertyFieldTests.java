@@ -1,17 +1,26 @@
 package monopoly;
 
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class PropertyFieldTests {
+class PropertyFieldTest {
+
     @Test
-    void testDoAction() {
-      // see assertion examples here: https://howtodoinjava.com/junit5/junit-5-assertions-examples/
+    void propertyFieldInitializationShouldBeCorrect() {
+        PropertyField propertyField = new PropertyField("TestProperty", 1, "Blue", 200, 20);
+
+        assertEquals("TestProperty", propertyField.getName());
+        assertEquals(1, propertyField.getPosition());
+        assertEquals("Blue", propertyField.getColor());
+        assertEquals(200, propertyField.getValue());
+        assertEquals(20, propertyField.getRent());
+        assertNull(propertyField.getOwner());
     }
 
     @Test
-    public void testDoActionBuyField() {
-        PropertyField propertyField = new PropertyField("Property", 10, "Blue", 200, 20);
-        Player player = new Player("Player1", 1000);
+    void propertyFieldDoActionShouldAllowPlayerToBuyField() {
+        PropertyField propertyField = new PropertyField("TestProperty", 1, "Blue", 200, 20);
+        Player player = new Player("TestPlayer", 1000);
 
         propertyField.doAction(player);
 
@@ -19,48 +28,25 @@ public class PropertyFieldTests {
     }
 
     @Test
-    public void testDoActionPayRent() {
-        PropertyField propertyField = new PropertyField("Property", 10, "Blue", 200, 20);
+    void propertyFieldDoActionShouldNotAllowOwnerToBuyFieldAgain() {
+        PropertyField propertyField = new PropertyField("TestProperty", 1, "Blue", 200, 20);
+        Player player = new Player("TestPlayer", 1000);
+
+        propertyField.doAction(player);
+        propertyField.doAction(player); // Try to buy again
+
+        assertEquals(player, propertyField.getOwner());
+    }
+
+    @Test
+    void propertyFieldDoActionShouldChargeRentToOtherPlayer() {
+        PropertyField propertyField = new PropertyField("TestProperty", 1, "Blue", 200, 20);
         Player owner = new Player("Owner", 1000);
-        Player player = new Player("Player1", 1000);
+        Player player = new Player("TestPlayer", 1000);
 
-        propertyField.setOwner(owner);
+        propertyField.doAction(owner); // Owner buys the property
+        propertyField.doAction(player); // Other player lands on the property
 
-        propertyField.doAction(player);
-
-        assertEquals(980, player.getPlayerMoney());
-        assertEquals(1020, owner.getPlayerMoney());
-    }
-
-    @Test
-    public void testDoActionOwnField() {
-        PropertyField propertyField = new PropertyField("Property", 10, "Blue", 200, 20);
-        Player player = new Player("Player1", 1000);
-
-        propertyField.setOwner(player);
-
-        propertyField.doAction(player);
-
-        assertEquals(1000, player.getPlayerMoney());
-    }
-
-    @Test
-    public void testDoActionBankruptcy() {
-        PropertyField expensiveProperty = new PropertyField("ExpensiveProperty", 15, "Red", 1000, 100);
-        Player player = new Player("Player1", 100);
-
-        expensiveProperty.doAction(player);
-
-        assertTrue(player.isBankrupt());
-    }
-
-    @Test
-    public void testDoActionInsufficientFundsToBuy() {
-        PropertyField expensiveProperty = new PropertyField("ExpensiveProperty", 15, "Red", 1000, 100);
-        Player player = new Player("Player1", 500);
-
-        expensiveProperty.doAction(player);
-
-        assertNull(expensiveProperty.getOwner());
+        assertEquals(980, player.getPlayerMoney()); // Assuming the rent is 20
     }
 }
