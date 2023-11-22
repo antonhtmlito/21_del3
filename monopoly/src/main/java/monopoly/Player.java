@@ -9,291 +9,198 @@ public class Player {
     private boolean hasFreeJailCard;
     private int position;
     private String symbol;
+    private static GameBoard gameBoard; 
 
-    public int getPosition() {
-        return position;
-    }
-
-    public void setPosition(int position) {
-        this.position = position;
-    }
-
-    public boolean move(int eyes) {
-        boolean passedStart;
-        if (position + eyes >= 20) {
-            position = position + eyes - 20;
-            passedStart=true;
-        } else {
-            position = position + eyes;
-            passedStart=false;
-        }
-        System.out.print("moved "+ playerName + " to " + (position+1));
-        if(passedStart){
-            System.out.print(" and passed start");
-            
-        }
-        System.out.println();
-        return passedStart;
-    }
-   
-   
-
-    public Player(String playerName, int playerMoney, boolean inJail, boolean hasFreeJailCard,int position, String symbol) {
+    public Player(String playerName) {
         this.playerName = playerName;
-        this.playerMoney = playerMoney;
-        this.inJail = inJail;
-        this.hasFreeJailCard = hasFreeJailCard;
-        this.position = position;
-        this.symbol = symbol;
+        this.playerMoney = 20000;
+        this.inJail = false;
+        this.hasFreeJailCard = false;
+        this.position = 0;
     }
 
-    public void getReward(FreeField field) {
-       // TODO : handle this
-       // this.playerMoney = this.playerMoney + field.getReward();
-    }
+    public void takeTurn() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(playerName + "'s turn. Press Enter to roll the die.");
+        scanner.nextLine();
 
-    public void payRent(Field field) {
-        if (field instanceof Field) {
-            Field Field = (Field) field;
-        
-            int rentAmount = Field.getRent();
-        
-            if (playerMoney >= rentAmount) {
-                playerMoney -= rentAmount;
-                Field.getOwner().receiveRent(rentAmount);
-                System.out.println(playerName + " har betalt leje på " + rentAmount + " til " + Field.getOwner().getPlayerName());
-            } else {
-                System.out.println(playerName + " har ikke nok penge til at betale leje.");
+        int eyes = rollDice();
+        System.out.println("__________________________________________________________________________________________________\n");
+        System.out.println("You rolled " + eyes);
+
+        move(eyes);
+
+        System.out.println("Current position: " + (position));
+
+        Field field = gameBoard.getField(position);
+
+        if (field instanceof PropertyField) {
+            PropertyField propertyField = (PropertyField) field;
+            if (propertyField.getOwner() == null) {
+                System.out.println("You've landed on " + propertyField.getName() + ". This property is not owned. You have " + playerMoney + " money and the property costs " + propertyField.getValue() + ". Do you want to buy it? (Y/N)");
+                String response = scanner.nextLine().toUpperCase();
+
+                if (response.equals("Y")) {
+                    buyField(propertyField);
+                }
+            } else if (!propertyField.getOwner().equals(this)) {
+                System.out.println("You've landed on " + propertyField.getName() + ". But it's unfortunately already owned by " + propertyField.getOwner() + " and you must therefor pay them rent.");
+                payRent(propertyField);
+            } else if (propertyField.getOwner().equals(this)) {
+                System.out.println("You've landed on " + propertyField.getName() + " but you already own it.");
             }
-        } else {
-            System.out.println("Kan ikke betale leje for dette type felt.");
+        }
+        else if (field instanceof ChanceField) {
+            System.out.println("You've landed on a chance field!");
+            pickChance();
+        }
+        else if (field instanceof FreeField) {
+            System.out.println("you've landed on a free field! Just relax and wait for you next turn.");
+        }
+        else if (field instanceof JailField) {
+            System.out.println("Ah! You've landed on a jail field! No worries though. You're just visiting");
+        }
+        else if (field instanceof GoToJailField) {
+            System.out.println("You got caught doing tax fraud!");
+            GoToJailField goToJailField = (GoToJailField) field;
+            goToJailField.doAction(this);
         }
         
-        
     }
 
-    public void buyField(Field field) {
-       // TODO : handle this
+    private void buyField(PropertyField propertyField) {
+        if (playerMoney >= propertyField.getValue()) {
+            playerMoney -= propertyField.getValue();
+            propertyField.setOwner(this);
+            System.out.println(playerName + " bought " + propertyField.getName() +
+                    " for $" + propertyField.getValue());
+        } else {
+            System.out.println(playerName + " does not have enough money to buy " + propertyField.getName());
+        }
+    }     
+
+    void payRent(PropertyField propertyField) {
+        int rentAmount = propertyField.getRent();
+
+        if (playerMoney >= rentAmount) {
+            playerMoney -= rentAmount;
+            propertyField.getOwner().receiveRent(rentAmount);
+            System.out.println(playerName + " paid $" + rentAmount + " rent to " + propertyField.getOwner().getPlayerName());
+        } else {
+            System.out.println(playerName + " does not have enough money to pay rent to " + propertyField.getOwner().getPlayerName());
+        }
     }
 
     public void useJailFreeCard() {
-        //TODO :  handle this
+        if (hasFreeJailCard) {
+            System.out.println(playerName + " used a jail-free card.");
+            hasFreeJailCard = false;
+        } else {
+            System.out.println(playerName + " doesn't have a jail-free card.");
+        }
+    }
+
+    public void setGameBoard(GameBoard gameBoard) {
+        Player.gameBoard = gameBoard;
+    }    
+
+    public void getReward(FreeField field) {
+        playerMoney += 2000;
+        System.out.println(playerName + " received a reward!");
+    }
+
+    private int[] cards = new int[6];
+
+    public void pickChance() {
+        System.out.println("Player: " + playerName + " pickup chance.");
+
+        int temp = new Random().nextInt(cards.length);
+
+        if (temp == 0) {
+            System.out.println("Ryk frem til Start og modtag 2000.");
+            position = 0;
+            playerMoney += 2000;
+        } else if (temp == 1) {
+            System.out.println("Ryk 5 felter frem.");
+            position += 5;
+            if (position >= 24) {
+                getReward(null);
+            }
+        } else if (temp == 2) {
+            System.out.println("Ryk 1 felt frem");
+            position += 1;
+            if (position >= 24) {
+                getReward(null);
+            }
+        } else if (temp == 3) {
+            System.out.println("Du har spist for meget slik. Betal 2000 til banken.");
+            playerMoney -= 2000;
+        } else if (temp == 4) {
+            System.out.println("Du har lavet alle dine lektier. Modtag 2000 fra banken.");
+            playerMoney += 2000;
+        } else if (temp == 5) {
+            System.out.println("Du løslades uden omkostninger. Behold dette kort, indtil du får brug for det.");
+            hasFreeJailCard = true;
+        }
+    }
+
+    public void receiveRent(int rentAmount) {
+        playerMoney += rentAmount;
+        System.out.println(playerName + " received rent of $" + rentAmount);
+    }
+
+    public void setInJail(boolean inJail) {
+        this.inJail = inJail;
     }
 
     public boolean getInJail() {
         return inJail;
-    } 
+    }
 
-    public void setInJail(boolean inJail) {
-         this.inJail = inJail;
-    } 
+    public void setHasFreeJailCard(boolean hasFreeJailCard) {
+        this.hasFreeJailCard = hasFreeJailCard;
+    }
 
     public boolean getHasFreeJailCard() {
         return hasFreeJailCard;
-    } 
-
-    public void setHasFreeJailCard(boolean hasFreeJailCard) {
-         this.hasFreeJailCard = hasFreeJailCard;
-    }
-
-    public Player(String playerName, int playerMoney) {
-        this.playerName = playerName;
-        this.playerMoney = playerMoney;
-    }
-
-    public String toString() {
-        return "Player{" +
-                "playerName='" + playerName + '\'' +
-                ", playerMoney=" + playerMoney +
-                '}';
-    }
-
-    public String getPlayerName() {
-        return playerName;
-    }
-
-    private int[] cards = new int[20];
-
-    public void pickChance() {
-        System.out.println("Player: " + player + " pickup chance.");
-        
-        for (int i = 0; i < cards.length; i++) {
-            cards[i] = i + 1;
-        }
-
-        int temp = cards[0];
-
-        if (p1Turn = true) {
-            pos = p1Pos;
-        }
-        else {
-            pos = p2Pos;
-        }
-
-        if (temp == 0) {
-            System.out.println("Ryk frem til Start og modtag M2.");
-            pos = 0;
-            playerMoney =+ 2;
-        }
-        else if (temp == 1) {
-            System.out.println("Ryk 5 felter frem.");
-            pos =+ 5;
-        }
-        else if (temp == 2) {
-            System.out.println("Ryk 1 felt frem, eller tag et chancekort mere");
-            Scanner scan = new Scanner(System.in);
-
-            String command = scan.nextLine();
-            switch(command) {
-                case "ryk":
-                    pos =+ 1;
-                    break;
-                case "chance":
-                    //igen??
-                    break;
-            }
-            scan.close();
-        }
-        else if (temp == 3) {
-            System.out.println("Ryk frem til Strandpromenaden");
-            pos = 23;
-        }
-        else if (temp == 4) {
-            System.out.println("Du har spist for meget slik. Betal M2 til banken.");
-            playerMoney =- 2;
-        }
-        else if (temp == 5) {
-            System.out.println("Det er din fødselsdag! Alle giver dig M1. Tillykke med fødselsdagen!");
-            playerMoney =+ playerAmount + 1;
-            //alles money =- 1;
-        }
-        else if (temp == 6) {
-            System.out.println("Du har lavet alle dine lektier. Modtag M2 fra banken.");
-            playerMoney =+ 2;
-        }
-        else if (temp == 7) {
-            System.out.println("Gratis felt! Ryk frem til Skaterparken for at lave det perfekte grind! hvis ingen ejer den, får du den gratis! Ellers skal du betale leje til ejeren.");
-            pos = 10;
-            if (isOwned = false) {
-                //få grunden
-            }
-            else {
-                //betal leje
-            }
-        }
-        else if (temp == 8) {
-            System.out.println("Gratis felt! Ryk frem til et orange felt. Hvis det er ledigt, får du det gratis! Ellers skal du betale leje til ejeren.");
-            //ryk til 10 eller 11
-
-        }
-        else if (temp == 9) {
-            System.out.println("Gratis felt! Ryk frem til et orange eller grønt felt. Hvis det er ledigt, får du det gratis! Ellers skal du betale leje til ejeren.");
-            //ryk til 10, 11, 19 eller 20
-        }
-        else if (temp == 10) {
-            System.out.println("Gratis felt! Ryk frem til et lyseblåt felt. Hvis det er ledigt, får du det gratis! Ellers skal du betale leje til ejeren.");
-            //ryk til 4 eller 5
-        }
-        else if (temp == 11) {
-            System.out.println("Gratis felt! Ryk frem til et pink eller mørkeblåt felt. Hvis det er ledigt, får du det gratis! Ellers skal du betale leje til ejeren.");
-            //ryk til 7, 8, 22 eller 23
-        }
-        else if (temp == 12) {
-            System.out.println("Gratis felt! Ryk frem til et rødt felt. Hvis det er ledigt, får du det gratis! Ellers skal du betale leje til ejeren.");
-            //ryk til 13 eller 14
-        }
-        else if (temp == 13) {
-            System.out.println("Gratis felt! Ryk frem til et lyseblåt eller rødt felt. Hvis det er ledigt, får du det gratis! Ellers skal du betale leje til ejeren.");
-            //ryk til 4, 5, 13 eller 14
-        }
-        else if (temp == 14) {
-            System.out.println("Gratis felt! Ryk frem til et brunt eller gult felt. Hvis det er ledigt, får du det gratis! Ellers skal du betale leje til ejeren.");
-            //ryk til 1, 2, 16 eller 17
-        }
-        else if (temp == 15) {
-            System.out.println("Du løslades uden omkostninger. Behold dette kort, indtil du får brug for det.");
-            hasFreeJailCard = true;
-        }
-        else if (temp == 16) {
-            System.out.println("Giv dette kort til Bilen, og tag et chancekort mere. Bil: på din næste tur skal du drøne frem til et hvilket som helst ledigt felt og købe det. Hvis der ikke er nogle ledige felter, skal du købe et fra en anden spiller!");
-            //igen??
-            //ryk til et ledigt felt (isOwned = false)
-        }
-        else if (temp == 17) {
-            System.out.println("Giv dette kort til Skibet, og tag et chancekort mere. Skib: på din næste tur skal du selje frem til et hvilket som helst ledigt felt og købe det. Hvis der ikke er nogle ledige felter, skal du købe et fra en anden spiller!");
-            //igen??
-            //ryk til et ledigt felt (isOwned = false)
-        }
-        else if (temp == 18) {
-            System.out.println("Giv dette kort til Katten, og tag et chancekort mere. Kat: på din næste tur skal du liste dig hen på et hvilket som helst ledigt felt og købe det. Hvis der ikke er nogle ledige felter, skal du købe et fra en anden spiller!");
-            //igen??
-            //ryk til et ledigt felt (isOwned = false)
-        }
-        else if (temp == 19) {
-            System.out.println("Giv dette kort til Hunden, og tag et chancekort mere. Hund: på din næste tur skal du hoppe hen på et til et hvilket som helst ledigt felt og købe det. Hvis der ikke er nogle ledige felter, skal du købe et fra en anden spiller!");
-            //igen??
-            //ryk til et ledigt felt (isOwned = false)
-        }
-
-        if (p1Turn = true) {
-            p1Pos = pos;
-        }
-        else {
-            p2Pos = pos;
-        }
-
-        for (int i = 0; i < cards.length - 1; i++) {
-            cards[i] = cards[i + 1];
-        }
-
-        cards[cards.length - 1] = temp;
-        
-    }
-
-    public void receiveRent(int rentAmount) {
-        this.playerMoney += rentAmount;
-        System.out.println(playerName + " modtager leje på " + rentAmount);
-    }
-
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
     }
 
     public int getPlayerMoney() {
         return playerMoney;
     }
 
-    public void setPlayerMoney(int playerMoney) {
-        this.playerMoney = playerMoney;
-    }
-
     public String getSymbol() {
         return symbol;
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((symbol == null) ? 0 : symbol.hashCode());
-        return result;
+    public String getPlayerName() {
+        return playerName;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Player other = (Player) obj;
-        if (symbol == null) {
-            if (other.symbol != null)
-                return false;
-        } else if (!symbol.equals(other.symbol))
-            return false;
-        return true;
+    private int rollDice() {
+        return new Random().nextInt(6) + 1;
     }
-    
+
+    private void move(int eyes) {
+        boolean passedStart;
+        if (position + eyes >= 24) {
+            position = position + eyes - 24;
+            passedStart = true;
+        } else {
+            position = position + eyes;
+            passedStart = false;
+        }
+
+        if (passedStart) {
+            getReward(null);
+        }
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPlayerMoney(int money) {
+        this.playerMoney = money;
+    }
 }

@@ -1,8 +1,8 @@
 package monopoly;
 
-public class GoToJailField extends Field implements FieldAction {
-    public GoToJailField(String symbol, String name, int position) {
-        super(symbol, name, position);
+public class GoToJailField extends Field{
+    public GoToJailField(String name, int position) {
+        super(name, position);
     }
 
     public void doAction(Player player) {
