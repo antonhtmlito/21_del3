@@ -9,7 +9,7 @@ public class JailField extends Field {
         if(player.getInJail()) {
             // TODO : handle this
         } else {
-             System.out.println("Spiller: " + player.getPlayerName() + " besøger fængsel");
+             System.out.println("player: " + player.getPlayerName() + " is visiting prison");
         }
     }
     @Override

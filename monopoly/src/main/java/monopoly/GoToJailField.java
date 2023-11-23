@@ -7,11 +7,11 @@ public class GoToJailField extends Field{
 
     public void doAction(Player player) {
         if(player.getHasFreeJailCard()) {
-            System.out.println("Spiller: " + player.getPlayerName() + " har et fri for fængsel kort, spil videre.");
+            System.out.println("Player: " + player.getPlayerName() + " has a get out of jail free card. Keep on playing");
             player.useJailFreeCard();
             return;
         }
-        System.out.println("Spiller: " + player.getPlayerName() + " bliver sendt til fængsel.");
+        System.out.println("Player: " + player.getPlayerName() + " will be sent to prison.");
         player.setInJail(true);
     }
     @Override

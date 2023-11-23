@@ -117,29 +117,29 @@ public class Player {
         int temp = new Random().nextInt(cards.length);
 
         if (temp == 0) {
-            System.out.println("Ryk frem til Start og modtag 2000.");
+            System.out.println("Move to the start and receive 2000 Money.");
             position = 0;
             playerMoney += 2000;
         } else if (temp == 1) {
-            System.out.println("Ryk 5 felter frem.");
+            System.out.println("Move 5 fields forward.");
             position += 5;
             if (position >= 24) {
                 getReward(null);
             }
         } else if (temp == 2) {
-            System.out.println("Ryk 1 felt frem");
+            System.out.println("Move to the next field");
             position += 1;
             if (position >= 24) {
                 getReward(null);
             }
         } else if (temp == 3) {
-            System.out.println("Du har spist for meget slik. Betal 2000 til banken.");
+            System.out.println("You ate too much candy. Pay 2000 money to the bank.");
             playerMoney -= 2000;
         } else if (temp == 4) {
-            System.out.println("Du har lavet alle dine lektier. Modtag 2000 fra banken.");
+            System.out.println("You have made all your homework. Receive 2000 money from the bank.");
             playerMoney += 2000;
         } else if (temp == 5) {
-            System.out.println("Du løslades uden omkostninger. Behold dette kort, indtil du får brug for det.");
+            System.out.println("You received a get out of jail free card. Keep it until you need it.");
             hasFreeJailCard = true;
         }
     }
