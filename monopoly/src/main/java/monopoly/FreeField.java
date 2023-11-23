@@ -1,6 +1,6 @@
 package monopoly;
 
-class FreeField extends Field implements FieldAction {
+public class FreeField extends Field {
     private int reward = 0;
 
     public FreeField(String name, int position) {
@@ -13,9 +13,19 @@ class FreeField extends Field implements FieldAction {
     }
 
     public void doAction(Player player) {
-        System.out.println("Player: " + player + " landed on free field.");
+        System.out.println("Player: " + player + " landed on a free field");
         if (this.reward != 0) {
             player.getReward(this);
         }
+    }
+
+    @Override
+    public int getRent() {
+        throw new UnsupportedOperationException("Unimplemented method 'getRent'");
+    }
+
+    @Override
+    public Player getOwner() {
+        throw new UnsupportedOperationException("Unimplemented method 'getOwner'");
     }
 }

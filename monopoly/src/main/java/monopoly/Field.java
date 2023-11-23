@@ -1,6 +1,6 @@
 package monopoly;
 
-abstract class Field {
+public abstract class Field {
     protected int position;
     protected String name;
 
@@ -16,4 +16,7 @@ abstract class Field {
     public int getPosition() {
         return position;
     }
+
+    public abstract int getRent();
+    public abstract Player getOwner();
 }
