@@ -8,7 +8,7 @@ public class JailField extends Field {
     public void doAction(Player player) {
         if(player.getInJail()) {
             System.out.println("You'll have to pay 1000 money to get bail.");
-            playerMoney -= 1;
+            player.setPlayerMoney(player.getPlayerMoney() - 1000);
         } else {
              System.out.println("player: " + player.getPlayerName() + " is visiting prison");
         }
