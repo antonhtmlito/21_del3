@@ -151,6 +151,7 @@ public class Player {
 
     public void setInJail(boolean inJail) {
         this.inJail = inJail;
+        position = 6;
     }
 
     public boolean getInJail() {
