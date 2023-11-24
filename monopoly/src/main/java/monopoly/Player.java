@@ -22,7 +22,7 @@ public class Player {
     public void takeTurn() {
         Scanner scanner = new Scanner(System.in);
         if (this.inJail) {
-            JailField.doAction(null);
+            JailField.doAction(this);
         }
         System.out.println(playerName + "'s turn. Press Enter to roll the die.");
         scanner.nextLine();
