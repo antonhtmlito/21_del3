@@ -5,7 +5,7 @@ public class JailField extends Field {
         super(name, position);
     }
 
-    public void doAction(Player player) {
+    public static void doAction(Player player) {
         if(player.getInJail()) {
             System.out.println("You'll have to pay 1000 money to get bail.");
             player.setPlayerMoney(player.getPlayerMoney() - 1000);
