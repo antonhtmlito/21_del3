@@ -20,7 +20,7 @@ class ChanceFieldTest {
 
         chanceField.doAction(testPlayer);
 
-        // Add assertions as needed based on the behavior of your code
+        
     }
 
     @Test
